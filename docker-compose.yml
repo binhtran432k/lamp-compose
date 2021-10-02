@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  apache:
+    image: httpd:2.4-alpine3.14
+    # container_name: lamp_apache
+    # restart:
+    #   always
+    ports:
+      - 80:80
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - ./public:/usr/local/apache2/htdocs
+      - ./conf/apache:/usr/local/apache2/conf
+      - phpmyadmin:/var/www/html
+    depends_on:
+      - phpmyadmin
+
+  phpmyadmin:
+    image: phpmyadmin:5.1-fpm-alpine
+    # container_name: lamp_phpmyadmin
+    # restart:
+    #   always
+    environment:
+      - PMA_HOST=mariadb
+    networks:
+      - backend
+    volumes:
+      - ./public:/usr/local/apache2/htdocs
+      - ./conf/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+      - phpmyadmin:/var/www/html
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.6-focal
+    # container_name: lamp_mariadb
+    # command: --default-authentication-plugin=mysql_native_password
+    # restart:
+    #   always
+    ports:
+      # - 3306:3306
+    networks:
+      - backend
+    volumes:
+      - ./conf/mariadb:/etc/mysql/conf.d
+      - ./database:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_HOST: "%"
+      MARIADB_ROOT_PASSWORD: "toor"
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+  phpmyadmin:
