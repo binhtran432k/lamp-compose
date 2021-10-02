@@ -40,12 +40,11 @@ services:
     # command: --default-authentication-plugin=mysql_native_password
     # restart:
     #   always
-    ports:
-      # - 3306:3306
+    # ports:
+    #   - 3306:3306
     networks:
       - backend
     volumes:
-      - ./conf/mariadb:/etc/mysql/conf.d
       - ./database:/var/lib/mysql
     environment:
       MARIADB_ROOT_HOST: "%"
