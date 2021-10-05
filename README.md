@@ -4,7 +4,7 @@
 |-|-|
 | Apache | 2.4 |
 | Mariadb | 10.6 |
-| PHP | 8.0 |
+| PHP | 7.4 |
 | PhpMyAdmin | 5.1 |
 
 ## Chạy docker-compose
@@ -39,7 +39,7 @@ cân nhắc khi gửi cho người khác
     - Người dùng trong database là "root" và mật khẩu là env
     "MARIADB_ROOT_PASSWORD" (Mặc định là "toor" trong "docker-compose.yml")
     - Khi dùng đến database trong php, ta sẽ liên kết thông qua domain là
-"mariadb"
+"db" thay vì là "localhost" như khi ko xài docker
 
 ## Public
 - Thư mục "public/" này sẽ được tạo sau khi chạy `docker-compose`, nó

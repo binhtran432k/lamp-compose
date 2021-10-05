@@ -16,15 +16,15 @@ services:
       - ./conf/apache:/usr/local/apache2/conf
       - phpmyadmin:/var/www/html
     depends_on:
-      - phpmyadmin
+      - php
 
-  phpmyadmin:
+  php:
     image: phpmyadmin:5.1-fpm-alpine
     # container_name: lamp_phpmyadmin
     # restart:
     #   always
     environment:
-      - PMA_HOST=mariadb
+      - PMA_HOST=db
     networks:
       - backend
     volumes:
@@ -32,9 +32,9 @@ services:
       - ./conf/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
       - phpmyadmin:/var/www/html
     depends_on:
-      - mariadb
+      - db
 
-  mariadb:
+  db:
     image: mariadb:10.6-focal
     # container_name: lamp_mariadb
     # command: --default-authentication-plugin=mysql_native_password
